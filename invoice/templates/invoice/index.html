@@ -1,0 +1,38 @@
+{% load static %}
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="ja">
+
+    <head>
+        <!-- Required meta tags always come first -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>注文アプリ</title>
+        {# Load CSS and JavaScript #}
+        {% bootstrap_css %}
+        <link href="{% static 'invoice/css/invoice.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container-fluid">
+            
+            <div class="clearfix">
+                <div class="col no-gutters">
+                    <img class="img-fluid" src="/static/invoice/img/thanks.png" alt="">
+                </div>
+                <h2>{{ blogs }}</h2>
+                <h3>ご提供までしばらくお待ちください</h3>
+                <div class="col no-gutters">
+                    <img class="img-fluid" src="/static/invoice/img/fav.png" alt="">
+                </div>
+            </div>
+        </div>
+    </body>
+
+
+
+
+
+
+
+    </html>

@@ -1,0 +1,50 @@
+a.command {
+    width: 8em;
+}
+
+table {
+    counter-reset: number 0;
+}
+
+table td.rownum:before {
+    counter-increment: number 1;
+    content: counter(number) " ";
+}
+
+table td.number {
+    text-align: right;
+}
+
+table th {
+    text-align: center;
+}
+.img_cafe {
+    text-align: center;
+    width:350px;
+    height:150px;
+    
+    object-fit: contain;
+}
+.no-gutters {
+    margin:0;
+    padding:0;
+    text-align: center;
+}
+.no-gutters　> .col,
+.no-gutters　> [class*="col-"] {
+    margin:0;
+    padding:0;
+}
+.clearfix h2 {
+    font-size: 24px;
+    margin-top: 20px;
+    text-align: center;
+    color: #7b5544;
+}
+.clearfix h3 {
+    font-size: 20px;
+    margin-top: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #7b5544;
+}

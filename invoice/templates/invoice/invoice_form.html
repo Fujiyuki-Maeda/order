@@ -1,0 +1,106 @@
+{% load static %}
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="ja">
+
+    <head>
+        <!-- Required meta tags always come first -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>注文アプリ</title>
+        {# Load CSS and JavaScript #}
+        {% bootstrap_css %}
+        <link href="{% static 'invoice/css/invoice.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        {{ form.certifications.errors }}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-8 offset-sm-2">
+                    
+                    
+                    
+                    <div class="clearfix">
+                        <div class="col no-gutters">
+                            <img class="img-fluid" src="/static/invoice/img/cafe.png" alt="">
+                        </div>
+                        <div class="float-right mt-3 mb-3">
+                            <!-- {% if object %}
+                                <a class="btn btn-outline-secondary command" href="{% url 'detail' invoice.pk %}">戻る</a>
+                            {% else %}
+                                <a class="btn btn-outline-secondary command" href="{% url 'index' %}">戻る</a>
+                            {% endif %} -->
+                            <a class="btn btn-outline-secondary command save" href="#">注文登録</a>
+                        </div>
+                    </div>
+                    <div>
+                        {% bootstrap_formset_errors formset %}
+                    </div>
+                    <form method="post" class="form" id="myform">
+                        {% csrf_token %}
+                        {{ formset.management_form }}
+                        {% bootstrap_field form.customer show_label=False %}
+                        <div>
+                            <table class="table table-striped">
+                                <tbody class="invoicedetail">
+                                {% for form in formset %}
+                                    <tr>
+                                        <td class="align-middle rownum"></td>
+                                        <td>
+                                            {% bootstrap_field form.id show_label=False %}
+                                            {% bootstrap_field form.item show_label=False %}
+                                            {% bootstrap_field form.quantity show_label=False %}
+                                            {% bootstrap_field form.DELETE show_label=False field_class="float-right" %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <a href="#" class="btn btn-outline-secondary add-invoicedetail col-12">行を追加</a>
+                    </form>
+                    <div class="float-right mt-3 mb-3">
+                        <!-- {% if object %}
+                            <a class="btn btn-outline-secondary command" href="{% url 'detail' invoice.pk %}">戻る</a>
+                        {% else %}
+                            <a class="btn btn-outline-secondary command" href="{% url 'index' %}">戻る</a>
+                        {% endif %} -->
+                        <a class="btn btn-outline-secondary command save" href="#">注文登録</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {% block bottom_script %}
+            <script type="text/html" id="invoicedetail-template">
+                <tr id="invoicedetail-__prefix__">
+                    <td class="align-middle rownum"></td>
+                    <td>
+                        {% bootstrap_field formset.empty_form.item show_label=False %}
+                        {% bootstrap_field formset.empty_form.quantity show_label=False %}
+                        {% bootstrap_field formset.empty_form.DELETE show_label=False field_class="float-right" %}
+                    </td>
+                </tr>
+            </script>
+            {% bootstrap_javascript jquery='full' %}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+            <script src="{% static 'invoice/js/invoice.js' %}"></script>
+            <script>
+                $(function () {
+                    $('.add-invoicedetail').click(function (e) {
+                        e.preventDefault();
+                        var count = parseInt($('#id_invoicedetail_set-TOTAL_FORMS').attr('value'), 10);
+                        var tmplMarkup = $('#invoicedetail-template').html();
+                        var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count)
+                        console.log(compiledTmpl);
+                        $('tbody.invoicedetail').append(compiledTmpl);
+                        $('#id_invoicedetail_set-TOTAL_FORMS').attr('value', count + 1);
+                    });
+                });
+            </script>
+        {% endblock bottom_script %}
+    </body>
+    
+</html>
